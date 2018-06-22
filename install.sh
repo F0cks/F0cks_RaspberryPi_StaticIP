@@ -122,7 +122,7 @@ ssh_menu()
                 # Change SSH port
                 1)  ssh_change_port_menu
                     ;;
-                # Enable/Disable password connexion
+                # Enable/Disable password authentication
                 2)  ssh_disable_password_menu
                     ;;
                 *)  echo "SSH Error"
