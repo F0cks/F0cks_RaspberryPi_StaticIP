@@ -14,10 +14,10 @@ SSH_PORT=22
 
 # static IP
 STATIC_IP_ABORT=0
-IPv4dev
-IPv4addr
-IPv4gw
-IPv4dns
+IPv4dev=0
+IPv4addr=0
+IPv4gw=0
+IPv4dns=0
 
 ###############
 ### SSH BEG ###
