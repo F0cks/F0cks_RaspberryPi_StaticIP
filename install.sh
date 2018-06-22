@@ -14,6 +14,7 @@ SSH_PORT=22
 
 # static IP
 STATIC_IP_ABORT=0
+STATIC_IP_SET=0
 IPv4dev=0
 IPv4addr=0
 IPv4gw=0
@@ -296,6 +297,7 @@ staticIp_menu()
     if [ $STATIC_IP_ABORT = 0 ]; then
         dhcpcd_backup
         dhcpcd_update
+        STATIC_IP_SET=1
         ASK_TO_REBOOT=1
     fi 
 }
@@ -303,6 +305,23 @@ staticIp_menu()
 #####################
 ### STATIC IP END ###
 #####################
+
+#################
+### PIVPN BEG ###
+#################
+
+pivpn_menu()
+{
+    if [ $STATIC_IP_SET = 1 ] || [ -f /etc/dhcpcd.conf.f0cks.bak ]; then
+        whiptail --title "Static IP" --msgbox "PiVPN will assist you to set a static IP. Your previous configuration will be deleted." 10 60
+        dhcpcd_backup
+    fi
+    curl -L https://install.pivpn.io | bash
+}
+
+#################
+### PIVPN END ###
+#################
 
 # Force sudo
 if [ "$EUID" -ne 0 ]
@@ -316,7 +335,8 @@ while :
 do
     OPTION=$(whiptail --title "F0cks RaspberryPi ToolBox" --cancel-button Finish --ok-button Select --menu "\nChoose what you want to do:" 15 60 4 \
     "1" "SSH operations"\
-    "2" "Set static IP" 3>&1 1>&2 2>&3)
+    "2" "Set static IP"\
+    "3" "Install PiVPN" 3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         case "$OPTION" in
@@ -325,6 +345,9 @@ do
                 ;;
             # Static IP
             2)  staticIp_menu
+                ;;
+            # PiVPN
+            3)  pivpn_menu
                 ;;
             *)  echo "Error"
                 exit 1
