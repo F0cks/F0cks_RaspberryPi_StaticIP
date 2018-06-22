@@ -6,6 +6,10 @@ Some commands/configurations that I use again, again and again when I configure 
 curl -L raspberrypi.toolbox.f0cks.net | sudo bash
 ```
 ## Releases
+* **v0.0.3** - *22/06/18*
+  * Add PiVPN install 
+  * Minor corrections
+
 * **v0.0.2** - *22/06/18*
   * Static IP: 
     * Use preset configuration
